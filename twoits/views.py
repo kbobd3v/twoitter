@@ -13,7 +13,7 @@ def home_view(request, *args, **kwargs):
 
 # request defines method, args and kwargs are came as parameters used by the function
 # are defined in the urls patterns urls.py
-def twoit_detail_view(request, twoit_id,*args, **kwargs):
+def twoit_detail_view(request, twoit_id, *args, **kwargs):
     data = {
         'id': twoit_id,
         # 'image_path': obj.image.url,
@@ -22,7 +22,7 @@ def twoit_detail_view(request, twoit_id,*args, **kwargs):
     try:
         # object.get() method it's a built-in feature to find matching id's on db
         obj = Twoit.objects.get(id=twoit_id)
-        data['content']=obj.content
+        data['content'] = obj.content
     except:
         data['message'] = "Not found"
         status = 404

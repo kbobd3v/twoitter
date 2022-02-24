@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view),
     # here defines which parameters will be used by the render function
-    path('hello/<int:twoit_id>', twoit_detail_view),
+    path('twoits/<int:twoit_id>', twoit_detail_view),
 ]
