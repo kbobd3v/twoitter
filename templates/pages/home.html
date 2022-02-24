@@ -1,1 +1,42 @@
-<h1>Hello everyone!</h1>
+{% extends './base.html' %}
+
+{% block headtitle %}| Home {% endblock headtitle %}
+
+{% block content %}
+Home page
+
+<div id="twoits">
+    Loading...
+</div>
+
+<script>
+    const twoitsElement = document.getElementById('twoits');
+    const xhr = new XMLHttpRequest();
+    const method = 'GET'; //POST
+    const url = '/twoits';
+    const responseType = 'json';
+
+    function LikeBtn() {
+        return "<button class='btn btn-primary'>Like</button>"
+    }
+
+    function formatTwoitElement(twoit) {
+        formattedTwoit = '<div class="mb-4" id="tweet-' + twoit.id
+            + '">' + '<p>' + twoit.content +
+            '</p><div class="btm-group">' + LikeBtn() + '</div></div>';
+        return formattedTwoit;
+    }
+    xhr.responseType = responseType;
+    xhr.open(method, url);
+    xhr.onload = function() {
+        const serverResponse = xhr.response
+        const listedItems = serverResponse.response;
+        let finalTwoitStr = "";
+        listedItems.map((item) => {
+            finalTwoitStr += formatTwoitElement(item);
+        })
+        twoitsElement.innerHTML = finalTwoitStr;
+    }
+    xhr.send();
+</script>
+{% endblock content %}

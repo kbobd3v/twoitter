@@ -11,6 +11,16 @@ def home_view(request, *args, **kwargs):
     return render(request, 'pages/home.html', context={}, status=200)
 
 
+def twoit_list_view(request, *args, **kwargs):
+    qs = Twoit.objects.all()
+    twoits_list = [{'id': x.id, 'content': x.content} for x in qs]
+    data = {
+        'isUser': False,
+        'response': twoits_list
+    }
+    return JsonResponse(data)
+
+
 # request defines method, args and kwargs are came as parameters used by the function
 # are defined in the urls patterns urls.py
 def twoit_detail_view(request, twoit_id, *args, **kwargs):
