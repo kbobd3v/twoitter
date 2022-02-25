@@ -16,14 +16,20 @@ Home page
     const url = '/twoits';
     const responseType = 'json';
 
-    function LikeBtn() {
-        return "<button class='btn btn-primary'>Like</button>"
+    function handleDidLike (twoit_id, currentCount){
+        console.log(twoit_id, currentCount);
+        return
+    }
+
+    function LikeBtn(twoit) {
+        return "<button class='btn btn-primary btn-small' onclick=handleDidLike(" +
+            twoit.id + "," + twoit.likes +")>" + twoit.likes + " Likes</button>"
     }
 
     function formatTwoitElement(twoit) {
         formattedTwoit = '<div class="mb-4" id="tweet-' + twoit.id
             + '">' + '<p>' + twoit.content +
-            '</p><div class="btm-group">' + LikeBtn() + '</div></div>';
+            '</p><div class="btm-group">' + LikeBtn(twoit) + '</div></div>';
         return formattedTwoit;
     }
     xhr.responseType = responseType;

@@ -1,3 +1,4 @@
+import random
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
 
@@ -13,7 +14,7 @@ def home_view(request, *args, **kwargs):
 
 def twoit_list_view(request, *args, **kwargs):
     qs = Twoit.objects.all()
-    twoits_list = [{'id': x.id, 'content': x.content} for x in qs]
+    twoits_list = [{'id': x.id, 'content': x.content, 'likes': random.randint(0, 10)} for x in qs]
     data = {
         'isUser': False,
         'response': twoits_list
