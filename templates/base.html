@@ -11,8 +11,11 @@
     <title>Twoitter {% block headtitle %} {% endblock headtitle %}</title>
   </head>
   <body>
+  {% include "components/navbar.html" %}
+  <div class="container-fluid">
     {% block content %}
     {% endblock content %}
+  </div>
     <!--  DRY Don't Repeat Yourself  -->
 
     <!-- Optional JavaScript; choose one of the two! -->
