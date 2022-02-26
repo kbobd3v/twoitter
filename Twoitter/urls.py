@@ -16,11 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 
-from twoits.views import home_view, twoit_detail_view, twoit_list_view
+from twoits.views import (
+    home_view,
+    twoit_detail_view,
+    twoit_list_view,
+    twoit_create_view,
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view),
+    path('create-twoit/', twoit_create_view),
     path('twoits/', twoit_list_view),
     # here defines which parameters will be used by the render function
     path('twoits/<int:twoit_id>', twoit_detail_view),
