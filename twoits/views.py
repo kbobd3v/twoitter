@@ -16,6 +16,7 @@ def twoit_create_view(request,*args, **kwargs):
     # Here we initialize our TwoitForm class with the info sent by our form in html by post method
     # or None if there's no info coming from html form
     form = TwoitForm(request.POST or None)
+    print(request.POST)
     # is_valid method comes from our form model bring to us by django
     if form.is_valid():
         obj = form.save(commit=False)

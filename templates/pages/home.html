@@ -10,6 +10,20 @@
     </div>
 </div>
 
+<div class="row mb-3">
+    <div class="col-md-4 mx-auto col-10">
+        <!-- this form on action will execute our twoit_create_view        -->
+        <form class="form" method="POST" action="/create-twoit">
+            {% csrf_token %}
+            <!-- the "/" value is set in order to lead us home url          -->
+            <input type="hidden" value="/" name="next" />
+            <!--  our text area name is content because that's the value we will be looking for
+              on our TwoitForm class-->
+            <textarea class="form-control" name="content" placeholder="Twoit something!"></textarea>
+            <button type="submit" class="btn btn-primary">Twoit!</button>
+        </form>
+    </div>
+</div>
 <div class="row" id="twoits">
     Loading...
 </div>

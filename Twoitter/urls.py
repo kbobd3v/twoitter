@@ -26,7 +26,7 @@ from twoits.views import (
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_view),
-    path('create-twoit/', twoit_create_view),
+    path('create-twoit', twoit_create_view),
     path('twoits/', twoit_list_view),
     # here defines which parameters will be used by the render function
     path('twoits/<int:twoit_id>', twoit_detail_view),
