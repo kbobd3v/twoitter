@@ -3,9 +3,14 @@
 {% block headtitle %}| Home {% endblock headtitle %}
 
 {% block content %}
-Home page
 
-<div id="twoits">
+<div class="row text-center">
+    <div class="col">
+        <h1>Welcome to Twoitter</h1>
+    </div>
+</div>
+
+<div class="row" id="twoits">
     Loading...
 </div>
 
@@ -27,11 +32,12 @@ Home page
     }
 
     function formatTwoitElement(twoit) {
-        formattedTwoit = '<div class="mb-4" id="tweet-' + twoit.id
+        formattedTwoit = '<div class="col-12 col-md-10 py-3 mx-auto border rounded mb-4" id="tweet-' + twoit.id
             + '">' + '<p>' + twoit.content +
-            '</p><div class="btm-group">' + LikeBtn(twoit) + '</div></div>';
+            '</p><div class="btn-group">' + LikeBtn(twoit) + '</div></div>';
         return formattedTwoit;
     }
+    // Use this syntax to perform a request from xhtml to our endpoints
     xhr.responseType = responseType;
     xhr.open(method, url);
     xhr.onload = function() {
