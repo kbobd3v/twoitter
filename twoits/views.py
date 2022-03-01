@@ -10,6 +10,7 @@ from .models import Twoit
 
 ALLOWED_HOSTS = settings.ALLOWED_HOSTS
 
+
 def home_view(request, *args, **kwargs):
     # render receives request, url template, a context of variables and status code as parameters
     return render(request, 'pages/home.html', context={}, status=200)

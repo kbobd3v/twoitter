@@ -13,7 +13,7 @@
 <div class="row mb-3">
     <div class="col-md-4 mx-auto col-10">
         <!-- this form on action will execute our twoit_create_view        -->
-        <form class="form" method="POST" action="/create-twoit">
+        <form class="form" method="POST" id="twoit-create-form" action="/create-twoit">
             {% csrf_token %}
             <!-- the "/" value is set in order to lead us home url          -->
             <input type="hidden" value="/" name="next" />
@@ -29,11 +29,55 @@
 </div>
 
 <script>
-    const twoitsElement = document.getElementById('twoits');
-    const xhr = new XMLHttpRequest();
-    const method = 'GET'; //POST
-    const url = '/twoits';
-    const responseType = 'json';
+
+    function handleTwoitCreateFormDidSubmit(event){
+        event.preventDefault()
+        const myForm = event.target
+        // format the data in order to use it
+        const myFormData = new FormData(myForm)
+        // our form action is /create-twoit
+        const url = myForm.getAttribute('action')
+        const method = myForm.getAttribute('method')
+        // new xmlhttprequest to use with our url and method data which is POST
+        const xhr = new XMLHttpRequest()
+        xhr.open(method, url)
+        xhr.onload = function(){
+            // our response of course is our redirect on views.py
+            const serverResponse = xhr.response
+            console.log(serverResponse)
+            const twoitsEl = document.getElementById('twoits')
+            // so we re render our twoits list again
+            loadTwoits(twoitsEl)
+        }
+        xhr.send(myFormData)
+    }
+
+    const twoitCreateFormEl = document.getElementById('twoit-create-form');
+    twoitCreateFormEl.addEventListener('submit', handleTwoitCreateFormDidSubmit)
+
+    const twoitsEl = document.getElementById('twoits');
+
+    function loadTwoits(twoitsElement) {
+        const xhr = new XMLHttpRequest();
+        const method = 'GET'; //POST
+        const url = '/twoits';
+        const responseType = 'json';
+        // Use this syntax to perform a request from xhtml to our endpoints
+        xhr.responseType = responseType;
+        xhr.open(method, url);
+        xhr.onload = function () {
+            const serverResponse = xhr.response
+            const listedItems = serverResponse.response;
+            let finalTwoitStr = "";
+            listedItems.map((item) => {
+                finalTwoitStr += formatTwoitElement(item);
+            })
+            twoitsElement.innerHTML = finalTwoitStr;
+        }
+        xhr.send();
+    }
+
+    loadTwoits(twoitsEl)
 
     function handleDidLike (twoit_id, currentCount){
         console.log(twoit_id, currentCount);
@@ -51,18 +95,6 @@
             '</p><div class="btn-group">' + LikeBtn(twoit) + '</div></div>';
         return formattedTwoit;
     }
-    // Use this syntax to perform a request from xhtml to our endpoints
-    xhr.responseType = responseType;
-    xhr.open(method, url);
-    xhr.onload = function() {
-        const serverResponse = xhr.response
-        const listedItems = serverResponse.response;
-        let finalTwoitStr = "";
-        listedItems.map((item) => {
-            finalTwoitStr += formatTwoitElement(item);
-        })
-        twoitsElement.innerHTML = finalTwoitStr;
-    }
-    xhr.send();
+
 </script>
 {% endblock content %}
