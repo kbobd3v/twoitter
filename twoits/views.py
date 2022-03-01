@@ -26,8 +26,9 @@ def twoit_create_view(request, *args, **kwargs):
         obj = form.save(commit=False)
         # do other form related logic
         obj.save()
+        # if our xml request has headers then return the object created
         if request.is_ajax():
-            return JsonResponse({}, status=201)
+            return JsonResponse(obj.serialize(), status=201)
         # if our next_url value is True, then redirect to it
         # you can use require_https
         if next_url is not None and is_safe_url(next_url, ALLOWED_HOSTS):
@@ -40,7 +41,7 @@ def twoit_create_view(request, *args, **kwargs):
 def twoit_list_view(request, *args, **kwargs):
     # objects.all() return an array of objects within the Twoit Model on our DATABASE
     qs = Twoit.objects.all()
-    twoits_list = [{'id': x.id, 'content': x.content, 'likes': random.randint(0, 10)} for x in qs]
+    twoits_list = [x.serialize() for x in qs]
     data = {
         'isUser': False,
         'response': twoits_list

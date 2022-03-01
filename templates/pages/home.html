@@ -19,7 +19,7 @@
             <input type="hidden" value="/" name="next" />
             <!--  our text area name is content because that's the value we will be looking for
               on our TwoitForm class-->
-            <textarea class="form-control" name="content" placeholder="Twoit something!"></textarea>
+            <textarea required="required" class="form-control" name="content" placeholder="Twoit something!"></textarea>
             <button type="submit" class="btn btn-primary">Twoit!</button>
         </form>
     </div>
@@ -44,12 +44,15 @@
         xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
         xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
         xhr.onload = function(){
-            // our response of course is our redirect on views.py
-            const serverResponse = xhr.response
-            console.log(serverResponse)
-            const twoitsEl = document.getElementById('twoits')
-            // so we re render our twoits list again
-            loadTwoits(twoitsEl)
+            if (xhr.status === 201){
+                const newTwoit = xhr.response
+                const newTwoitJson = JSON.parse(newTwoit)
+                const newTwoitElement = formatTwoitElement(newTwoitJson)
+                const ogHtml = twoitsContainerElement.innerHTML
+                twoitsContainerElement.innerHTML = newTwoitElement + ogHtml
+                // reset html method cleans our form in order to use it again
+                myForm.reset()
+            }
         }
         xhr.send(myFormData)
     }
@@ -57,7 +60,7 @@
     const twoitCreateFormEl = document.getElementById('twoit-create-form');
     twoitCreateFormEl.addEventListener('submit', handleTwoitCreateFormDidSubmit)
 
-    const twoitsEl = document.getElementById('twoits');
+    const twoitsContainerElement = document.getElementById('twoits');
 
     function loadTwoits(twoitsElement) {
         const xhr = new XMLHttpRequest();
@@ -79,7 +82,7 @@
         xhr.send();
     }
 
-    loadTwoits(twoitsEl)
+    loadTwoits(twoitsContainerElement)
 
     function handleDidLike (twoit_id, currentCount){
         console.log(twoit_id, currentCount);
