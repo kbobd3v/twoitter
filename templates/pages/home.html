@@ -41,6 +41,8 @@
         // new xmlhttprequest to use with our url and method data which is POST
         const xhr = new XMLHttpRequest()
         xhr.open(method, url)
+        xhr.setRequestHeader("HTTP_X_REQUESTED_WITH", "XMLHttpRequest")
+        xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest")
         xhr.onload = function(){
             // our response of course is our redirect on views.py
             const serverResponse = xhr.response
